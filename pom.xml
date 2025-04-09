@@ -116,6 +116,18 @@
         <artifactId>jetty-maven-plugin</artifactId>
         <version>${org.eclipse.jetty.jetty-maven-plugin.version}</version>
       </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-site-plugin</artifactId>
+        <version>3.12.1</version>
+      </plugin>
+
+      <!-- <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-project-info-reports-plugin</artifactId>
+        <version>3.4.5</version>
+      </plugin> -->
     </plugins>
   </build>
 
@@ -124,6 +136,13 @@
     <module>docs-web-common</module>
     <module>docs-web</module>
   </modules>
+
+  <distributionManagement>
+    <site>
+      <id>my-site</id>
+      <url>file:///home/drych12/cs304-SE/Teedy/target/site</url>
+    </site>
+  </distributionManagement>
 
   <dependencyManagement>
     <dependencies>
