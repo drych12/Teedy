@@ -3,30 +3,76 @@
   <a class="btn btn-primary" href="#/settings/user/add">{{ 'settings.user.add_user' | translate }}</a>
 </h1>
 
-<div class="row">
-  <div class="col-md-4 well">
-    <table class="table table-hover table-users">
-      <thead>
-        <tr>
-          <th>{{ 'settings.user.username' | translate }}</th>
-          <th>{{ 'settings.user.create_date' | translate }}</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr ng-repeat="user in users | orderBy: 'username'" ng-click="editUser(user)"
-            ng-class="{ active: $stateParams.username == user.username }">
-          <td>
-            <span ng-if="!user.disabled">{{ user.username }}</span>
-            <s ng-if="user.disabled">{{ user.username }}</s>
-            <span class="fas fa-lock" ng-show="user.totp_enabled" uib-tooltip="{{ 'settings.user.totp_enabled' | translate }}"></span>
-          </td>
-          <td>{{ user.create_date | date: dateFormat }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+<uib-tabset>
+  <uib-tab heading="用户列表">
+    <div class="row">
+      <div class="col-md-4 well">
+        <table class="table table-hover table-users">
+          <thead>
+            <tr>
+              <th>{{ 'settings.user.username' | translate }}</th>
+              <th>{{ 'settings.user.create_date' | translate }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="user in users | orderBy: 'username'" ng-click="editUser(user)"
+                ng-class="{ active: $stateParams.username == user.username }">
+              <td>
+                <span ng-if="!user.disabled">{{ user.username }}</span>
+                <s ng-if="user.disabled">{{ user.username }}</s>
+                <span class="fas fa-lock" ng-show="user.totp_enabled" uib-tooltip="{{ 'settings.user.totp_enabled' | translate }}"></span>
+              </td>
+              <td>{{ user.create_date | date: dateFormat }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-  <div class="col-md-8">
-    <div ui-view="user"></div>
-  </div>
-</div>
+      <div class="col-md-8">
+        <div ui-view="user"></div>
+      </div>
+    </div>
+  </uib-tab>
+  
+  <uib-tab heading="注册申请" select="loadRegisterRequests()">
+    <div class="row" style="margin-top: 20px;">
+      <div class="col-md-12">
+        <div class="panel panel-default" ng-if="requests.length === 0">
+          <div class="panel-body">
+            <p class="text-center">没有待处理的用户注册申请</p>
+          </div>
+        </div>
+        
+        <div class="panel panel-primary" ng-repeat="request in requests">
+          <div class="panel-heading">
+            <h3 class="panel-title">{{ request.username }} <small class="text-white">{{ request.email }}</small></h3>
+          </div>
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-md-8">
+                <p>
+                  <strong>申请时间：</strong> {{ request.create_date | date: dateFormat }}
+                </p>
+                <p ng-if="request.message">
+                  <strong>申请理由：</strong><br>
+                  {{ request.message }}
+                </p>
+              </div>
+              <div class="col-md-4 text-right">
+                <div class="form-group">
+                  <textarea class="form-control" ng-model="request.responseText" placeholder="回复给申请人的信息（可选）" rows="3"></textarea>
+                </div>
+                <button class="btn btn-success" ng-click="approveRequest(request)">
+                  <span class="fas fa-check"></span> 批准
+                </button>
+                <button class="btn btn-danger" ng-click="rejectRequest(request)">
+                  <span class="fas fa-times"></span> 拒绝
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </uib-tab>
+</uib-tabset>
