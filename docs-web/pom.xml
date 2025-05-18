@@ -188,6 +188,34 @@
                 <contextPath>/docs-web</contextPath>
                 <overrideDescriptor>${project.basedir}/src/dev/main/webapp/web-override.xml</overrideDescriptor>
               </webApp>
+
+              <!-- 启用自动重新部署 -->
+              <scan>2</scan> <!-- 每2秒扫描一次更改 -->
+              
+              <!-- 配置监控的资源 -->
+              <scanTargets>
+                <!-- 监控Java类 -->
+                <scanTarget>${project.basedir}/target/classes</scanTarget>
+                <!-- 监控HTML, JS, CSS文件 -->
+                <scanTarget>${project.basedir}/src/main/webapp</scanTarget>
+                <!-- 监控开发环境资源 -->
+                <scanTarget>${project.basedir}/src/dev/resources</scanTarget>
+              </scanTargets>
+              
+              <!-- 配置要监视更改的资源类型 -->
+              <scanTargetPatterns>
+                <scanTargetPattern>
+                  <directory>${project.basedir}/src/main/webapp</directory>
+                  <includes>
+                    <include>**/*.html</include>
+                    <include>**/*.js</include>
+                    <include>**/*.css</include>
+                  </includes>
+                </scanTargetPattern>
+              </scanTargetPatterns>
+              
+              <!-- 添加重载特定类路径 -->
+              <reload>automatic</reload>
             </configuration>
           </plugin>
           
