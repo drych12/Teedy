@@ -20,6 +20,14 @@
   </div>
 </div>
 
+<div class="row" ng-if="userInfo.username === 'guest' && user.username === 'guest'">
+  <div class="col-md-6">
+    <button class="btn btn-primary" ng-click="requestRegistration()">
+      <span class="fas fa-user-plus"></span> 申请注册
+    </button>
+  </div>
+</div>
+
 <h4>{{ 'user.profile.related_links' | translate }}</h4>
 <ul>
   <li>
