@@ -287,7 +287,7 @@ public class UserDao {
      * @param password Clear password
      * @return Hashed password
      */
-    private String hashPassword(String password) {
+    public String hashPassword(String password) {
         int bcryptWork = Constants.DEFAULT_BCRYPT_WORK;
         String envBcryptWork = System.getenv(Constants.BCRYPT_WORK_ENV);
         if (!Strings.isNullOrEmpty(envBcryptWork)) {
