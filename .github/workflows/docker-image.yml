@@ -50,7 +50,7 @@ jobs:
         id: metadata 
         uses: docker/metadata-action@v3 
         with: 
-          images: xx/Teedy # Docker Hub repository 
+          images: drych12/teedy-app # Docker Hub repository 
           flavor: | 
             latest=false 
           tags: | 
